@@ -3,6 +3,7 @@ package com.zchpc.billing.controller;
 import com.zchpc.billing.helper.CSVHelper;
 import com.zchpc.billing.message.ResponseMessage;
 import com.zchpc.billing.model.Accounts;
+import com.zchpc.billing.repo.AccountsRepo;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import com.zchpc.billing.service.CSVService;
@@ -18,6 +19,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("http://localhost:8080")
@@ -31,6 +37,9 @@ public class CSVController {
 
     @Autowired
     CSVService fileService;
+
+    @Autowired
+    AccountsRepo accountsRepo;
 
     @GetMapping("/home")
     public String home() {
@@ -69,6 +78,8 @@ public class CSVController {
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
 
+//        fileService.save(file);
+
         if (CSVHelper.hasCSVFormat(file)) {
             try {
                 fileService.save(file);
@@ -83,6 +94,12 @@ public class CSVController {
 
         message = "Please upload a csv file!";
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+    }
+
+    @GetMapping("/uploadFileFrontEnd")
+    public String uploadedStaff(Model model){
+        model.addAttribute("results", status);
+        return "uploadStatus";
     }
 
     @GetMapping("/uploadMessage")

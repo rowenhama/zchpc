@@ -63,9 +63,7 @@
                         <a class="nav-link" href="Subscribers">Subscribers</a>
                     </li>
                     <li>
-                        <form method="POST" th:action="@{/logout}">
                             <button class="btn btn-danger my-2 my-sm-0" type="submit">Logout</button>
-                        </form>
                     </li>
 
                 </ul>
@@ -113,10 +111,10 @@
     </section>
 </div>
 <script>
-            function changeFunc() {
-                var selectedValue = document.getElementById('pack').value;
-                //                alert(selectedValue);//this is to show which package you have selected
-            }
+<!--            function changeFunc() {-->
+<!--                var selectedValue = document.getElementById('pack').value;-->
+<!--                //                alert(selectedValue);//this is to show which package you have selected-->
+<!--            }-->
 
         </script>
 
@@ -128,7 +126,7 @@
 <script>
             function sendData() {
                 if (document.getElementById("file").value !== ""
-                        && document.getElementById('search_categories').value !== "") {
+                        || document.getElementById('search_categories').value !== "") {
                     document.getElementById('btnClicked').hidden = true;
                     document.getElementById('btnDisabled').hidden = false;
                 }
